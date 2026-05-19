@@ -1,0 +1,78 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2064851971063488223
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7864712500750230860}
+  - component: {fileID: 1283579099324232544}
+  m_Layer: 0
+  m_Name: GameFlow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7864712500750230860
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2064851971063488223}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1283579099324232544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2064851971063488223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5db0f5d63063b804fad1551c464da6d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  database: {fileID: 11400000, guid: e6b087931d9cdde42b793c0256d0966b, type: 2}
+  uiOrder: {fileID: 0}
+  buyFlower: {fileID: 0}
+  comandaArea: {fileID: 0}
+  repartidor: {fileID: 0}
+  dialeg: {fileID: 0}
+  fiDia: {fileID: 0}
+  date: {fileID: 0}
+  currentComanda:
+    nomComanda: 
+    clientName: 
+    requiredFlowers: []
+    reward: 0
+  currentDay: 1
+  dialogueManager: {fileID: 0}
+  dialogueManagerRepartidor: {fileID: 0}
+  currentDialogue: {fileID: 0}
+  allDialogues:
+  - {fileID: 11400000, guid: c0b6f317070d41640ac07542fea60907, type: 2}
+  - {fileID: 11400000, guid: 03d0f8f042d7ed141b4af9c66ed9d03c, type: 2}
+  - {fileID: 11400000, guid: 9690628378aa31d4ea802a6909508436, type: 2}
+  - {fileID: 11400000, guid: 8c9f54e102574b24d9cb8b29f0e3f1f8, type: 2}
+  - {fileID: 11400000, guid: 33399f445205ecf418ef21546cfa48d7, type: 2}
+  - {fileID: 11400000, guid: f101390da7821f34791d7e446add3b9d, type: 2}
+  - {fileID: 11400000, guid: 352c5423e5274654baa18a1c71a2d9ac, type: 2}
+  - {fileID: 11400000, guid: 84ea37f3a519c244e92602f8422c15d5, type: 2}
+  - {fileID: 11400000, guid: b861e4f80da0e0e4d8fa95ff6980534e, type: 2}
+  - {fileID: 11400000, guid: 2eb5aaa69b3392b4dbab085a242b8c91, type: 2}
+  - {fileID: 11400000, guid: 13aea2fd0a282f44ba5b94dd001f132a, type: 2}
+  cc: {fileID: 0}
+  lastOrderWasCorrect: 0
+  completedOrders: []

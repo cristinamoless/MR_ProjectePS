@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bec23eb2d740e224aa77d0071ea82c3b, type: 3}
+  m_Name: HappyLlorencDia1
+  m_EditorClassIdentifier: 
+  characterName: "Lloren\xE7"
+  characterPixel: {fileID: 21300000, guid: cd023a3636c8df947b5219f139559952, type: 3}
+  sentences:
+  - "Wow, fan molt bona olor, m\u2019agrada molt! Li regalar\xE9 a la meva mare.\r\n\n"
+  - "Escolta, passat dem\xE0 a la tarda pel forn i et convido a un caf\xE8 i un pastisset.
+    Si vols \xE9s clar."
+  day: 1
+  orderIndex: 2
+  type: 4
+  choices:
+  - choiceText: "Sona genial, Lloren\xE7. Dem\xE0 ens veiem doncs."
+    nextDialogue: {fileID: 11400000, guid: b861e4f80da0e0e4d8fa95ff6980534e, type: 2}
+  - choiceText: "No, ho s\xE9\u2026 Amb la mudan\xE7a i tot tinc bastanta feina,
+      per\xF2 em passar\xE9 a saludar!"
+    nextDialogue: {fileID: 11400000, guid: 2eb5aaa69b3392b4dbab085a242b8c91, type: 2}

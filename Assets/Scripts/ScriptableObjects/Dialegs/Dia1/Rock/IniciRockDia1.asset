@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bec23eb2d740e224aa77d0071ea82c3b, type: 3}
+  m_Name: IniciRockDia1
+  m_EditorClassIdentifier: 
+  characterName: Rock
+  characterPixel: {fileID: 21300000, guid: 9aa3add6b4c927d438d76d2a5d2e3684, type: 3}
+  sentences:
+  - 'Encantat, soc en Rock :)
+
+'
+  - 'Venia a preguntar si tenies flors vermelles. '
+  - "Avui \xE9s l\u2019aniversari de la meva xicota, i el vermell \xE9s el seu color
+    preferit\u2026\r\n"
+  - "S\xED que en tens!? Quina il\xB7lusi\xF3."
+  - "Doncs t\u2019encomano un ram de flors vermelles, m\u2019espero que el facis,
+    estar\xE9 per aqu\xED divagant. "
+  day: 1
+  orderIndex: 0
+  type: 0

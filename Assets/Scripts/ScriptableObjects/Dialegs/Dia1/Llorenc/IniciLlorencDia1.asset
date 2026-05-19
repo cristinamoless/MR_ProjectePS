@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bec23eb2d740e224aa77d0071ea82c3b, type: 3}
+  m_Name: IniciLlorencDia1
+  m_EditorClassIdentifier: 
+  characterName: "Lloren\xE7"
+  characterPixel: {fileID: 21300000, guid: fdb240f88a74c8549b4257a3b8d4f347, type: 3}
+  sentences:
+  - "Em presento soc en Lloren\xE7, forner del poble. He escoltat que avui havia
+    obert aquesta nova botiga i m\u2019ha picat la curiositat.\r\n"
+  - "{playerName}, oh quin nom m\xE9s maco. Encantat!\r\n\r\n"
+  - "Doncs, et demanar\xE9 un ram de flors, si no t\u2019importa. Jo tamb\xE9 vull
+    saber que tan bona \xE9s la nova florista del poble.\r\n\r\n"
+  - "Fes-me un ram amb el que tinguis, {playerName}, segur que m\u2019agrada.\r\n\r\n"
+  day: 1
+  orderIndex: 2
+  type: 0
+  choices: []

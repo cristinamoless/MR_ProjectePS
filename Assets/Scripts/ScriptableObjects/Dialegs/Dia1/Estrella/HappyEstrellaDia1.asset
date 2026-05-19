@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bec23eb2d740e224aa77d0071ea82c3b, type: 3}
+  m_Name: HappyEstrellaDia1
+  m_EditorClassIdentifier: 
+  characterName: Estrella
+  characterPixel: {fileID: 21300000, guid: 33ba0ee6504d5ac4eaf0408bec051330, type: 3}
+  sentences:
+  - "Oh, \xE9s preci\xF3s! Hi tens molta tra\xE7a, floreta.\r\n"
+  - " No dubtis en qu\xE8 tornar\xE9 a passar-me d\u2019aqu\xED a uns dies!  Ad\xE9u!!\r"
+  day: 1
+  orderIndex: 1
+  type: 1

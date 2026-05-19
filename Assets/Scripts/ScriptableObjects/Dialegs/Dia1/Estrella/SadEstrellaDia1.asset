@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bec23eb2d740e224aa77d0071ea82c3b, type: 3}
+  m_Name: SadEstrellaDia1
+  m_EditorClassIdentifier: 
+  characterName: Estrella
+  characterPixel: {fileID: 21300000, guid: 4d5110e02de66694db43272d006923f6, type: 3}
+  sentences:
+  - "Oh\u2026 T\u2019havia demanat nom\xE9s margarides\u2026 B\xE9\u2026 ja tornar\xE9
+    en un altre moment, floreta. \r\n\r\n"
+  - "Entenc que \xE9s el teu primer dia i potser estas nerviosa. No perdis els \xE0nims!\r"
+  day: 1
+  orderIndex: 1
+  type: 2
