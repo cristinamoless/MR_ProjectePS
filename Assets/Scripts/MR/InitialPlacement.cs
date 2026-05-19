@@ -3,6 +3,9 @@ using UnityEngine;
 public class InitialPlacement : MonoBehaviour
 {
     public PlacementManager placementManager;
+    public GameObject tablePrefab;
+    private GameObject previewTable;
+
 
     public void OnPlaceTable()
     {

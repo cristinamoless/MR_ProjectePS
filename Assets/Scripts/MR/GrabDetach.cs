@@ -8,15 +8,15 @@ public class GrabDetach : MonoBehaviour
 
     void Awake()
     {
-        rb = GetComponentInChildren<Rigidbody>();
-        grab = GetComponentInChildren<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
+        rb = GetComponent<Rigidbody>();
+        grab = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
 
         grab.selectEntered.AddListener(OnGrab);
     }
 
     void OnGrab(SelectEnterEventArgs args)
     {
-        transform.SetParent(null);
+        grab.transform.SetParent(null);
 
         rb.isKinematic = false;
         rb.useGravity = true;

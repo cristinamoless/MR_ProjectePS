@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
-using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class InfiniteFlower : MonoBehaviour
 {
@@ -10,12 +9,14 @@ public class InfiniteFlower : MonoBehaviour
     public XRInteractionManager interactionManager;
 
     private XRGrabInteractable grabInteractable;
-
     private bool spawning = false;
 
     void Awake()
     {
         grabInteractable = GetComponent<XRGrabInteractable>();
+
+        if (interactionManager == null)
+            interactionManager = FindFirstObjectByType<XRInteractionManager>();
 
         grabInteractable.selectEntered.AddListener(OnGrab);
     }
@@ -27,8 +28,7 @@ public class InfiniteFlower : MonoBehaviour
 
         spawning = true;
 
-        IXRSelectInteractor interactor =
-            args.interactorObject;
+        UnityEngine.XR.Interaction.Toolkit.Interactors.IXRSelectInteractor interactor = args.interactorObject;
 
         GameObject newFlower = Instantiate(
             flowerPrefab,
@@ -36,21 +36,12 @@ public class InfiniteFlower : MonoBehaviour
             transform.rotation
         );
 
-        Rigidbody rb = newFlower.GetComponent<Rigidbody>();
+        XRGrabInteractable newGrab = newFlower.GetComponent<XRGrabInteractable>();
 
-        if (rb != null)
+        if (newGrab != null)
         {
-            rb.isKinematic = false;
-            rb.useGravity = true;
+            interactionManager.SelectEnter(interactor, newGrab);
         }
-
-        XRGrabInteractable newGrab =
-            newFlower.GetComponent<XRGrabInteractable>();
-
-        interactionManager.SelectEnter(
-            interactor,
-            newGrab
-        );
 
         Invoke(nameof(ResetSpawn), 0.1f);
     }

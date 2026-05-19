@@ -23,5 +23,13 @@ public class FlowerCuttable : MonoBehaviour
         fullModel.SetActive(false);
         cutModel.SetActive(true);
 
+        // Afegir física al model tallat
+        Rigidbody rb = cutModel.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+            rb.useGravity = true;
+        }
     }
+
 }
