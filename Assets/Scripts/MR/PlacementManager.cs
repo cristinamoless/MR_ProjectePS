@@ -4,12 +4,10 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 public class PlacementManager : MonoBehaviour
 {
     public XRRayInteractor rightHandRay;
-
-    public GameObject windowPrefab;
     public Transform placementMarker;
-
     public Transform tableAnchor;
     public Transform windowAnchor;
+    public GameObject windowPrefab;
 
     private GameObject previewWindow;
     private bool placingTable = false;
@@ -74,18 +72,16 @@ public class PlacementManager : MonoBehaviour
             windowAnchor.position = previewWindow.transform.position;
             windowAnchor.rotation = previewWindow.transform.rotation;
 
-            var npcManager = FindFirstObjectByType<NPCManager>();
-            npcManager.spawnPoint = windowAnchor;
-
             placingWindow = false;
             placementMarker.gameObject.SetActive(false);
-
             previewWindow = null;
 
+            var comandaArea = FindFirstObjectByType<ComandaArea>();
+            comandaArea.transform.position = windowAnchor.position + windowAnchor.forward * 0.5f;
+            comandaArea.transform.rotation = windowAnchor.rotation;
+
             var gameFlow = FindFirstObjectByType<GameFlowManager>();
-            gameFlow.StartDay();
+            gameFlow.StartShopPhase();
         }
     }
 }
-
-

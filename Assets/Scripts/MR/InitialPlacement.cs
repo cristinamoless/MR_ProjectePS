@@ -13,4 +13,9 @@ public class InitialPlacement : MonoBehaviour
     {
         placementManager.StartPlacingWindow();
     }
+
+    public void OnConfirm()
+    {
+        placementManager.ConfirmPlacement();
+    }
 }
