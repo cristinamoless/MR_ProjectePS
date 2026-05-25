@@ -19,6 +19,17 @@ public class PlacementManager : MonoBehaviour
     private bool placingTable = false;
     private bool placingWindow = false;
 
+    private bool tablePlaced = false;
+    private bool windowPlaced = false;
+
+    [Header("UI Integration (Optional)")]
+    public GameObject setupMenuPanel;
+    public GameObject confirmPanel;
+    public GameObject continueButton;
+
+    public bool IsTablePlaced => tablePlaced;
+    public bool IsWindowPlaced => windowPlaced;
+
     void Update()
     {
         if (!placingTable && !placingWindow)
@@ -54,6 +65,8 @@ public class PlacementManager : MonoBehaviour
 
         previewTable = Instantiate(tablePrefab);
         placementMarker.gameObject.SetActive(true);
+
+        UpdateUIPanels(true);
     }
 
     public void StartPlacingWindow()
@@ -66,6 +79,8 @@ public class PlacementManager : MonoBehaviour
 
         previewWindow = Instantiate(windowPrefab);
         placementMarker.gameObject.SetActive(true);
+
+        UpdateUIPanels(true);
     }
 
     public void ConfirmPlacement()
@@ -78,6 +93,9 @@ public class PlacementManager : MonoBehaviour
             Destroy(previewTable);
             placingTable = false;
             placementMarker.gameObject.SetActive(false);
+            
+            tablePlaced = true;
+            UpdateUIPanels(false);
             return;
         }
 
@@ -90,14 +108,53 @@ public class PlacementManager : MonoBehaviour
             placingWindow = false;
             placementMarker.gameObject.SetActive(false);
 
-            // Moure ComandaArea
+            // Moure ComandaArea (si existeix)
             var comandaArea = FindFirstObjectByType<ComandaArea>();
-            comandaArea.transform.position = windowAnchor.position + windowAnchor.forward * 0.5f;
-            comandaArea.transform.rotation = windowAnchor.rotation;
+            if (comandaArea != null)
+            {
+                comandaArea.transform.position = windowAnchor.position + windowAnchor.forward * 0.5f;
+                comandaArea.transform.rotation = windowAnchor.rotation;
+            }
 
-            // Passar a botiga
+            windowPlaced = true;
+            UpdateUIPanels(false);
+        }
+    }
+
+    public void StartGame()
+    {
+        if (tablePlaced && windowPlaced)
+        {
             var gameFlow = FindFirstObjectByType<GameFlowManager>();
-            gameFlow.StartShopPhase();
+            if (gameFlow != null)
+            {
+                gameFlow.StartShopPhase();
+            }
+            else
+            {
+                Debug.LogWarning("GameFlowManager not found in scene! Starting game simulation locally.");
+            }
+
+            // Ocultar el Canvas completament en començar el joc
+            if (setupMenuPanel != null) setupMenuPanel.SetActive(false);
+            if (confirmPanel != null) confirmPanel.SetActive(false);
+            if (continueButton != null) continueButton.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("Cannot start game: Both Table and Window must be placed first.");
+        }
+    }
+
+    private void UpdateUIPanels(bool isPlacing)
+    {
+        if (setupMenuPanel != null) setupMenuPanel.SetActive(!isPlacing);
+        if (confirmPanel != null) confirmPanel.SetActive(isPlacing);
+        
+        // El botó Continuar només es mostra o activa si ambdues coses estan col·locades
+        if (continueButton != null)
+        {
+            continueButton.SetActive(tablePlaced && windowPlaced);
         }
     }
 }
