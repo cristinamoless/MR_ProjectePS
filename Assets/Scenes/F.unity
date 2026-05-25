@@ -7823,7 +7823,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2986347568299839220, guid: 0409a81af50b1b94da67c2d4baac6556, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.063
+      value: 1.135
       objectReference: {fileID: 0}
     - target: {fileID: 2986347568299839220, guid: 0409a81af50b1b94da67c2d4baac6556, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8112,10 +8112,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3db18159b0b6b434cb90dada42c7310e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectPrefab: {fileID: 0}
-  interactionManager: {fileID: 916437840}
-  grabInteractable: {fileID: 0}
-  hasSpawned: 0
 --- !u!1 &1156615419
 GameObject:
   m_ObjectHideFlags: 0
@@ -14570,11 +14566,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a590a30f7c30da24c90ca9a716b05fc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flowerPrefab: {fileID: 9125179492188449065, guid: a67928f1963b3814a9e24bd76cdeb9e0, type: 3}
-  interactionManager: {fileID: 916437840}
-  isSourceFlower: 1
-  grabInteractable: {fileID: 0}
-  spawning: 0
 --- !u!1 &2046186085
 GameObject:
   m_ObjectHideFlags: 0
