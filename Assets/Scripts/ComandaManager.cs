@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class ComandaManager : MonoBehaviour
 {
     public TableManager table;
+    public GameObject botoConfirmarRam; 
 
     private GameFlowManager flow;
     public Comanda currentComanda;
@@ -12,7 +12,16 @@ public class ComandaManager : MonoBehaviour
     void Start()
     {
         flow = FindFirstObjectByType<GameFlowManager>();
-        currentComanda = flow.currentComanda;
+        
+        if (flow != null)
+        {
+            currentComanda = flow.currentComanda;
+        }
+
+        if (botoConfirmarRam != null)
+        {
+            botoConfirmarRam.SetActive(true);
+        }
     }
 
     public bool CheckOrder()
@@ -47,7 +56,7 @@ public class ComandaManager : MonoBehaviour
 
     public void ConfirmOrder()
     {
-       bool correct = CheckOrder();
+        bool correct = CheckOrder();
         flow.lastOrderWasCorrect = correct;
 
         if (correct)
@@ -55,10 +64,13 @@ public class ComandaManager : MonoBehaviour
             int reward = currentComanda.reward;
             PlayerStars.Instance.addStars(reward);
         }
-        SceneManager.UnloadSceneAsync("BuildFlower");
+
+        if (botoConfirmarRam != null)
+        {
+            botoConfirmarRam.SetActive(false);
+        }
+
         table.ClearTable();
         flow.OnOrderConfirmed();
-    
     }
-
 }
