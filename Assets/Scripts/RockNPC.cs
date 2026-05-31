@@ -1,21 +1,26 @@
 using UnityEngine;
+using System;
 
 public class RockNPC : MonoBehaviour
 {
     public Animator anim;
     public Transform exitPoint;
     public float walkSpeed = 2f;
+
     private bool isLeaving = false;
+
+    public Action OnExitFinished;
 
     void Start()
     {
-        anim.SetBool("isWaving", true);  
+        anim.SetBool("isWaving", true);
     }
 
     public void StopWaving()
     {
         anim.SetBool("isWaving", false);
     }
+
     public void LeaveShop()
     {
         anim.SetBool("isWaving", false);
@@ -39,6 +44,7 @@ public class RockNPC : MonoBehaviour
 
             if (Vector3.Distance(transform.position, exitPoint.position) < 0.1f)
             {
+                OnExitFinished?.Invoke(); 
                 Destroy(gameObject);
             }
         }
