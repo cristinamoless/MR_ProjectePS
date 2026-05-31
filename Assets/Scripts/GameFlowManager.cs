@@ -54,7 +54,7 @@ public class GameFlowManager : MonoBehaviour
         repartidor.SetActive(false);
         dialeg.SetActive(false);
         fiDia.SetActive(false);
-        date.SetActive(false);
+        date.SetActive(false); 
         toDo.SetActive(false);
         notEnough.SetActive(false);
     }
@@ -63,6 +63,9 @@ public class GameFlowManager : MonoBehaviour
     {
         currentMRPhase = MRPhase.Shop;
         placementUI.SetActive(false);
+        
+        date.SetActive(true); 
+        
         buyFlower.showFlowers();
     }
 
@@ -84,7 +87,7 @@ public class GameFlowManager : MonoBehaviour
         currentDay++;
         comandaIndex = 0;
 
-        date.SetActive(true);
+        date.SetActive(true); 
         fiDia.SetActive(false);
         toDo.SetActive(false);
         repartidor.SetActive(true);
@@ -202,7 +205,7 @@ public class GameFlowManager : MonoBehaviour
     public void EndDay()
     {
         fiDia.SetActive(true);
-        date.SetActive(false);
+        date.SetActive(false); 
         dialeg.SetActive(false);
         
         uiOrder.ShowEndOfDay(completedOrders);
@@ -251,6 +254,7 @@ public class GameFlowManager : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 notEnough.SetActive(false);
+                date.SetActive(true); 
                 StartDay(); 
             }
         }
