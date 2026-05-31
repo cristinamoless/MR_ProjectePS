@@ -12,7 +12,6 @@ public enum MRPhase
 public class GameFlowManager : MonoBehaviour
 {
     public MRPhase currentMRPhase = MRPhase.Placement;
-
     public GameObject placementUI;
 
     public DadesComanda database;
@@ -24,38 +23,46 @@ public class GameFlowManager : MonoBehaviour
     public GameObject dialeg;
     public GameObject fiDia;
     public GameObject date;
+    public GameObject toDo;
+    public GameObject notEnough;
 
     public Comanda currentComanda;
-    public int currentDay = 1;
+    public int currentDay = 0; // Comença a 0 perquè StartDay() fa el ++
     private int comandaIndex = 0;
+    public bool lastOrderWasCorrect;
+    private bool waitingForFinalDialogue = false;
+    public List<CompletedOrderInfo> completedOrders = new List<CompletedOrderInfo>();
 
     public DialogueManager dialogueManager;
     public DialogueManager dialogueManagerRepartidor;
     public Dialogue currentDialogue;
     public Dialogue[] allDialogues;
 
-    public CustomCursor cc;
-    public bool lastOrderWasCorrect;
-    private bool waitingForFinalDialogue = false;
 
-    public List<CompletedOrderInfo> completedOrders = new List<CompletedOrderInfo>();
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
 
     void Start()
     {
+        currentMRPhase = MRPhase.Placement;
+        
         placementUI.SetActive(true);
-
         repartidor.SetActive(false);
         dialeg.SetActive(false);
         fiDia.SetActive(false);
         date.SetActive(false);
+        toDo.SetActive(false);
+        notEnough.SetActive(false);
     }
+
 
     public void StartShopPhase()
     {
         currentMRPhase = MRPhase.Shop;
-
         placementUI.SetActive(false);
-
+        
         buyFlower.showFlowers();
     }
 
@@ -68,8 +75,10 @@ public class GameFlowManager : MonoBehaviour
     public void StartCraftingPhase()
     {
         currentMRPhase = MRPhase.Crafting;
-        Debug.Log("Comen�a la fase de muntar el ram en 3D!");
+        toDo.SetActive(false);
+        dialeg.SetActive(false);
     }
+
 
     public void StartDay()
     {
@@ -78,10 +87,14 @@ public class GameFlowManager : MonoBehaviour
 
         date.SetActive(true);
         fiDia.SetActive(false);
+        toDo.SetActive(false);
         repartidor.SetActive(true);
 
         currentDialogue = GetDialogue(currentDay, 0, DialogueType.Repartidor);
-        dialogueManagerRepartidor.StartDialogue(currentDialogue);
+        if (currentDialogue != null && dialogueManagerRepartidor != null)
+        {
+            dialogueManagerRepartidor.StartDialogue(currentDialogue);
+        }
     }
 
     public void BeginClients()
@@ -102,19 +115,22 @@ public class GameFlowManager : MonoBehaviour
         dialeg.SetActive(false);
         if (dialogueManager.isDialogueInici)
         {
-            if (currentDay == 1)
-                currentComanda = database.day1Orders[comandaIndex];
-            else
-                currentComanda = database.day2Orders[comandaIndex];
+            var list = currentDay == 1 ? database.day1Orders : database.day2Orders;
+            
+            if (comandaIndex < list.Count)
+            {
+                currentComanda = list[comandaIndex];
+                uiOrder.ShowOrder(currentComanda);
+                toDo.SetActive(true);
 
-            uiOrder.ShowOrder(currentComanda);
+                StartCraftingPhase();
+            }
         }
     }
 
     public void OnOrderConfirmed()
     {
         bool correct = lastOrderWasCorrect;
-
         var list = currentDay == 1 ? database.day1Orders : database.day2Orders;
 
         completedOrders.Add(new CompletedOrderInfo
@@ -126,15 +142,13 @@ public class GameFlowManager : MonoBehaviour
         comandaIndex++;
         currentComanda = null;
         uiOrder.ClearUI();
+        toDo.SetActive(false);
 
         Dialogue result = null;
-
         if (correct)
         {
-            result = GetDialogue(currentDay, comandaIndex - 1, DialogueType.Choice);
-
-            if (result == null)
-                result = GetDialogue(currentDay, comandaIndex - 1, DialogueType.Happy);
+            result = GetDialogue(currentDay, comandaIndex - 1, DialogueType.Choice) ?? 
+                     GetDialogue(currentDay, comandaIndex - 1, DialogueType.Happy);
         }
         else
         {
@@ -151,7 +165,8 @@ public class GameFlowManager : MonoBehaviour
         }
 
         comandaArea.hasTalked = false;
-        cc.SetCursor();
+        
+        currentMRPhase = MRPhase.Clients;
     }
 
     public void OnDialogueEnded()
@@ -165,16 +180,41 @@ public class GameFlowManager : MonoBehaviour
 
         if (waitingForFinalDialogue)
         {
-            fiDia.SetActive(true);
-            date.SetActive(false);
-            uiOrder.ShowEndOfDay(completedOrders);
-            waitingForFinalDialogue = false;
-
-            var timeManager = FindFirstObjectByType<TimeManager>();
-            timeManager.currentDayIndex++;
-            timeManager.SetDay(timeManager.currentDayIndex);
-            timeManager.ResetDay();
+            EndDay();
         }
+    }
+
+    public void EndDay()
+    {
+        fiDia.SetActive(true);
+        date.SetActive(false);
+        dialeg.SetActive(false);
+        uiOrder.ShowEndOfDay(completedOrders);
+        waitingForFinalDialogue = false;
+
+        bool hasEnoughStars = PlayerStars.Instance.totalStars >= GetMinimumStarsForNextDay();
+
+        if (!hasEnoughStars)
+        {
+            notEnough.SetActive(true);
+            currentDay--; 
+            return;
+        }
+
+        var timeManager = FindFirstObjectByType<TimeManager>();
+        timeManager.ResetDay();
+        StartShopPhase();
+    }
+
+    private int GetMinimumStarsForNextDay()
+    {
+        int total = 0;
+        foreach (var flower in buyFlower.allFlowers)
+        {
+            if (flower.availableDay == currentDay + 1 && !flower.unlocked)
+                total += flower.seedPrice;
+        }
+        return total;
     }
 
     public Dialogue GetDialogue(int day, int index, DialogueType type)
@@ -184,7 +224,18 @@ public class GameFlowManager : MonoBehaviour
             if (d.day == day && d.orderIndex == index && d.type == type)
                 return d;
         }
-
         return null;
+    }
+
+    public void Update()
+    {
+        if (notEnough.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+            {
+                notEnough.SetActive(false);
+                StartDay(); 
+            }
+        }
     }
 }
