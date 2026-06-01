@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TableManager : MonoBehaviour
 {
-    public Transform workArea; 
+    public Transform workArea;
 
     public List<FlowerType> GetFlowersOnTable()
     {
@@ -25,4 +25,3 @@ public class TableManager : MonoBehaviour
             Destroy(child.gameObject);
     }
 }
-

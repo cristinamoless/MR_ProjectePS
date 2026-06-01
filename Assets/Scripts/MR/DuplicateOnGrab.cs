@@ -1,67 +1,45 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
-using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
-public class DuplicateOnGrab : MonoBehaviour
+public class DuplicateOnGrab3D : MonoBehaviour
 {
-    [Header("Prefab que es crearà")]
-    public GameObject clonePrefab;
-
-    [Header("XR Interaction Manager")]
-    public XRInteractionManager interactionManager;
-
+    public GameObject flowerPrefab;
     private XRGrabInteractable grab;
-
-    // IMPORTANT:
-    // només l'original pot duplicar
-    private bool canDuplicate = true;
+    private bool hasDuplicated = false;
 
     void Awake()
     {
         grab = GetComponent<XRGrabInteractable>();
-
-        if (interactionManager == null)
-            interactionManager = FindFirstObjectByType<XRInteractionManager>();
-
         grab.selectEntered.AddListener(OnGrab);
     }
 
-    void OnGrab(SelectEnterEventArgs args)
+    void OnDestroy()
     {
-        // les còpies NO poden duplicar
-        if (!canDuplicate)
-            return;
-
-        IXRSelectInteractor interactor = args.interactorObject;
-
-        // crear còpia
-        GameObject clone = Instantiate(
-            clonePrefab,
-            transform.position,
-            transform.rotation
-        );
-
-        // IMPORTANT:
-        // la còpia ja NO pot duplicar més
-        DuplicateOnGrab duplicateScript =
-            clone.GetComponent<DuplicateOnGrab>();
-
-        if (duplicateScript != null)
+        if (grab != null)
         {
-            duplicateScript.canDuplicate = false;
+            grab.selectEntered.RemoveListener(OnGrab);
+        }
+    }
+
+    private void OnGrab(SelectEnterEventArgs args)
+    {
+        if (hasDuplicated) return;
+
+        hasDuplicated = true;
+
+        TableManager table = FindFirstObjectByType<TableManager>();
+        if (table != null && table.workArea != null)
+        {
+            transform.SetParent(table.workArea);
         }
 
-        // agafar automàticament la còpia
-        XRGrabInteractable cloneGrab =
-            clone.GetComponent<XRGrabInteractable>();
+        GameObject nextSource = Instantiate(flowerPrefab, transform.position, transform.rotation);
 
-        if (cloneGrab != null)
+        DuplicateOnGrab3D newScript = nextSource.GetComponent<DuplicateOnGrab3D>();
+        if (newScript != null)
         {
-            interactionManager.SelectEnter(
-                interactor,
-                cloneGrab
-            );
+            newScript.hasDuplicated = false;
         }
     }
 }

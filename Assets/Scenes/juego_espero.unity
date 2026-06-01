@@ -4513,6 +4513,7 @@ MonoBehaviour:
   database: {fileID: 11400000, guid: e6b087931d9cdde42b793c0256d0966b, type: 2}
   uiOrder: {fileID: 330246141}
   buyFlower: {fileID: 333735733}
+  npcManager: {fileID: 1808392476}
   placementUI: {fileID: 876216624}
   repartidor: {fileID: 467444265}
   dialeg: {fileID: 563982819}
@@ -12341,6 +12342,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1347012915}
   m_CullTransparentMesh: 1
+--- !u!1 &1355978916
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1355978918}
+  - component: {fileID: 1355978917}
+  m_Layer: 0
+  m_Name: tableArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1355978917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355978916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c03fb05f422266c40aba89b3bda41550, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  workArea: {fileID: 1355978918}
+--- !u!4 &1355978918
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355978916}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -11.90576, y: -13.947046, z: 4.7786202}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1356249709
 GameObject:
   m_ObjectHideFlags: 0
@@ -15047,8 +15093,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db18242bdb066f24eb935d56e71d8f7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clonePrefab: {fileID: 6266495524839927647, guid: 7a548bd0d7ba671439b1533c73362a2f, type: 3}
-  interactionManager: {fileID: 0}
+  flowerPrefab: {fileID: 0}
 --- !u!114 &1632345880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17821,7 +17866,7 @@ Transform:
   m_GameObject: {fileID: 1857596651}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.25561714, y: 0.45153257, z: 0.18070412}
+  m_LocalPosition: {x: 5.83, y: 0.45153257, z: 0.18070412}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -19428,3 +19473,4 @@ SceneRoots:
   - {fileID: 1278113058}
   - {fileID: 1808392475}
   - {fileID: 1590536925}
+  - {fileID: 1355978918}

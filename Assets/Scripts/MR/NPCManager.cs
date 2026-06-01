@@ -3,14 +3,13 @@ using UnityEngine;
 public class NPCManager : MonoBehaviour
 {
     public GameObject[] clients;
-
     private GameObject currentClient;
 
     void Start()
     {
         foreach (GameObject client in clients)
         {
-            client.SetActive(false);
+            if (client != null) client.SetActive(false);
         }
     }
 
@@ -23,13 +22,16 @@ public class NPCManager : MonoBehaviour
             currentClient.SetActive(false);
 
         currentClient = clients[index];
-        currentClient.SetActive(true);
+        if (currentClient != null) currentClient.SetActive(true);
     }
 
     public void MakeCurrentClientLeave(System.Action onFinished)
     {
         if (currentClient == null)
+        {
+            onFinished?.Invoke();
             return;
+        }
 
         RockNPC rock = currentClient.GetComponent<RockNPC>();
 
@@ -40,7 +42,7 @@ public class NPCManager : MonoBehaviour
         }
         else
         {
-            Destroy(currentClient);
+            currentClient.SetActive(false);
             onFinished?.Invoke();
         }
     }

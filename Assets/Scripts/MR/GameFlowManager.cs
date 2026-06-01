@@ -7,6 +7,7 @@ public class GameFlowManager : MonoBehaviour
     public DadesComanda database;
     public OrderDisplay uiOrder;
     public BuyFlower buyFlower;
+    public NPCManager npcManager;
 
     [Header("--- UI Windows & Screens ---")]
     public GameObject placementUI;
@@ -79,6 +80,10 @@ public class GameFlowManager : MonoBehaviour
     {
         repartidor.SetActive(false);
         dialeg.SetActive(false);
+        if (npcManager != null)
+        {
+            npcManager.ShowClient(comandaIndex);
+        }
 
         if (dialogueManager != null && dialogueManager.botoParlarClient != null)
         {
@@ -106,6 +111,12 @@ public class GameFlowManager : MonoBehaviour
 
             uiOrder.ShowOrder(currentComanda);
             toDo.SetActive(true);
+
+            var comandaManager = FindFirstObjectByType<ComandaManager>();
+            if (comandaManager != null)
+            {
+                comandaManager.SetCurrentComanda(currentComanda);
+            }
         }
     }
 
@@ -150,21 +161,33 @@ public class GameFlowManager : MonoBehaviour
 
     public void OnDialogueEnded()
     {
-        if (!dialogueManager.isDialogueInici && !waitingForFinalDialogue)
+        if (!dialogueManager.isDialogueInici)
         {
-            var npcManager = FindFirstObjectByType<NPCManager>();
+            dialeg.SetActive(false); 
+
             if (npcManager != null)
             {
-                if (dialogueManager != null && dialogueManager.botoParlarClient != null)
+                npcManager.MakeCurrentClientLeave(() =>
                 {
-                    dialogueManager.botoParlarClient.SetActive(true);
-                }
+                    if (waitingForFinalDialogue)
+                    {
+                        EndDay();
+                    }
+                    else
+                    {
+                        npcManager.ShowClient(comandaIndex);
+                        if (dialogueManager != null && dialogueManager.botoParlarClient != null)
+                        {
+                            dialogueManager.botoParlarClient.SetActive(true);
+                        }
+                    }
+                });
             }
-        }
-
-        if (waitingForFinalDialogue)
-        {
-            EndDay();
+            else
+            {
+                if (waitingForFinalDialogue) EndDay();
+                else if (dialogueManager?.botoParlarClient != null) dialogueManager.botoParlarClient.SetActive(true);
+            }
         }
     }
 

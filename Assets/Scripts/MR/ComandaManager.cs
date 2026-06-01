@@ -13,11 +13,6 @@ public class ComandaManager : MonoBehaviour
     {
         flow = FindFirstObjectByType<GameFlowManager>();
 
-        if (flow != null)
-        {
-            currentComanda = flow.currentComanda;
-        }
-
         if (botoConfirmarRam != null)
         {
             botoConfirmarRam.SetActive(false);
@@ -27,6 +22,11 @@ public class ComandaManager : MonoBehaviour
     public void SetCurrentComanda(Comanda nuevaComanda)
     {
         currentComanda = nuevaComanda;
+
+        if (currentComanda != null)
+        {
+            MostrarBotoConfirmar(true);
+        }
     }
 
     public void MostrarBotoConfirmar(bool activar)
@@ -71,6 +71,8 @@ public class ComandaManager : MonoBehaviour
 
     public void ConfirmOrder()
     {
+        if (currentComanda == null) return;
+
         bool correct = CheckOrder();
         flow.lastOrderWasCorrect = correct;
 
@@ -80,10 +82,8 @@ public class ComandaManager : MonoBehaviour
             PlayerStars.Instance.addStars(reward);
         }
 
-        if (botoConfirmarRam != null)
-        {
-            botoConfirmarRam.SetActive(false);
-        }
+        MostrarBotoConfirmar(false);
+        currentComanda = null;
 
         table.ClearTable();
         flow.OnOrderConfirmed();
