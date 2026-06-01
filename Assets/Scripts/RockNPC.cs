@@ -4,7 +4,10 @@ using System;
 public class RockNPC : MonoBehaviour
 {
     public Animator anim;
+
+    public Transform spawnPoint;
     public Transform exitPoint;
+
     public float walkSpeed = 2f;
 
     private bool isLeaving = false;
@@ -13,6 +16,12 @@ public class RockNPC : MonoBehaviour
 
     void Start()
     {
+        if (spawnPoint != null)
+        {
+            transform.position = spawnPoint.position;
+            transform.rotation = spawnPoint.rotation * Quaternion.Euler(0, 180, 0);
+        }
+
         anim.SetBool("isWaving", true);
     }
 
@@ -44,7 +53,7 @@ public class RockNPC : MonoBehaviour
 
             if (Vector3.Distance(transform.position, exitPoint.position) < 0.1f)
             {
-                OnExitFinished?.Invoke(); 
+                OnExitFinished?.Invoke();
                 Destroy(gameObject);
             }
         }
