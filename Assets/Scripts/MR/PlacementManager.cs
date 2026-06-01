@@ -90,10 +90,12 @@ public class PlacementManager : MonoBehaviour
             tableAnchor.position = previewTable.transform.position;
             tableAnchor.rotation = previewTable.transform.rotation;
 
-            Destroy(previewTable);
+            previewTable.transform.SetParent(tableAnchor);
+            previewTable = null; 
+
             placingTable = false;
             placementMarker.gameObject.SetActive(false);
-            
+
             tablePlaced = true;
             UpdateUIPanels(false);
             return;
@@ -103,12 +105,12 @@ public class PlacementManager : MonoBehaviour
         {
             windowAnchor.position = previewWindow.transform.position;
             windowAnchor.rotation = previewWindow.transform.rotation;
+            previewWindow.transform.SetParent(windowAnchor);
+            previewWindow = null;
 
-            Destroy(previewWindow);
             placingWindow = false;
             placementMarker.gameObject.SetActive(false);
 
-            // Moure ComandaArea (si existeix)
             var comandaArea = FindFirstObjectByType<ComandaArea>();
             if (comandaArea != null)
             {
@@ -128,14 +130,13 @@ public class PlacementManager : MonoBehaviour
             var gameFlow = FindFirstObjectByType<GameFlowManager>();
             if (gameFlow != null)
             {
-                gameFlow.StartShopPhase();
+                gameFlow.StartDay();
             }
             else
             {
-                Debug.LogWarning("GameFlowManager not found in scene! Starting game simulation locally.");
+                Debug.LogWarning("GameFlowManager not found in scene! Cannot start the gameplay loop.");
             }
 
-            // Ocultar el Canvas completament en començar el joc
             if (setupMenuPanel != null) setupMenuPanel.SetActive(false);
             if (confirmPanel != null) confirmPanel.SetActive(false);
             if (continueButton != null) continueButton.SetActive(false);
@@ -150,8 +151,7 @@ public class PlacementManager : MonoBehaviour
     {
         if (setupMenuPanel != null) setupMenuPanel.SetActive(!isPlacing);
         if (confirmPanel != null) confirmPanel.SetActive(isPlacing);
-        
-        // El botó Continuar només es mostra o activa si ambdues coses estan col·locades
+
         if (continueButton != null)
         {
             continueButton.SetActive(tablePlaced && windowPlaced);

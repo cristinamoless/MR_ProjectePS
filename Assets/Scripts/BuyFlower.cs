@@ -16,13 +16,22 @@ public class BuyFlower : MonoBehaviour
 
     public List<FlowerButton> flowerButtons;
 
-    public GameObject marcComprar;      
-    public GameObject perComprar;      
-    public GameObject comprat;         
-    public TMP_Text confirmText;        
-    public TMP_Text resultText;         
+    [Header("--- UI Elements ---")]
+    public GameObject marcComprar;
+    public GameObject perComprar;
+    public GameObject comprat;
+    public TMP_Text confirmText;
+    public TMP_Text resultText;
+
+    [Header("--- VR Continue Button ---")]
+    public GameObject botoContinuar;
 
     private FlowerType selectedFlower;
+
+    void Start()
+    {
+        if (botoContinuar != null) botoContinuar.SetActive(false);
+    }
 
     public void showFlowers()
     {
@@ -30,7 +39,7 @@ public class BuyFlower : MonoBehaviour
 
         foreach (var flower in allFlowers)
         {
-            if (flower.availableDay <= gfm.currentDay && !flower.unlocked)
+            if (flower.availableDay == gfm.currentDay && !flower.unlocked)
                 available.Add(flower);
         }
 
@@ -38,6 +47,8 @@ public class BuyFlower : MonoBehaviour
         {
             fb.button.SetActive(available.Contains(fb.flower));
         }
+
+        ComprovarBotóContinuar();
     }
 
     public void AskToBuy(FlowerType flower)
@@ -70,23 +81,53 @@ public class BuyFlower : MonoBehaviour
             selectedFlower.unlocked = true;
 
             resultText.text = "COMPRAT!";
-            showFlowers(); 
+            showFlowers();
         }
         else
         {
             resultText.text = "No tens prou estrelles!";
         }
     }
-    void Update()
+
+    public void TancarCartellResultat()
     {
-        if (comprat.activeSelf)
+        comprat.SetActive(false);
+        marcComprar.SetActive(false);
+    }
+
+    private void ComprovarBotóContinuar()
+    {
+        if (botoContinuar == null) return;
+
+        if (CheckSiNoQuedanFlores())
         {
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
-            {
-                comprat.SetActive(false);
-                marcComprar.SetActive(false);
-            }
+            botoContinuar.SetActive(true);
+        }
+        else
+        {
+            botoContinuar.SetActive(false);
         }
     }
 
+    public void PremutBotoContinuar()
+    {
+        if (botoContinuar != null) botoContinuar.SetActive(false);
+
+        comprat.SetActive(false);
+        marcComprar.SetActive(false);
+
+        gfm.BeginClients();
+    }
+
+    private bool CheckSiNoQuedanFlores()
+    {
+        foreach (var flower in allFlowers)
+        {
+            if (flower.availableDay == gfm.currentDay && !flower.unlocked)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }

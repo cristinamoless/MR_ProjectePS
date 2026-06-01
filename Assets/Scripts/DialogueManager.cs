@@ -11,7 +11,7 @@ public class DialogueManager : MonoBehaviour
 
     public GameObject dialoguePanel;
     public GameObject agafarComandaButton;
-    public GameObject botoParlarClient; 
+    public GameObject botoParlarClient;
     public bool isDialogueInici = true;
 
     private Dialogue dialogue;
@@ -27,7 +27,8 @@ public class DialogueManager : MonoBehaviour
 
         dialoguePanel.SetActive(true);
         agafarComandaButton.SetActive(false);
-        if (botoParlarClient != null) botoParlarClient.SetActive(false); 
+
+        if (botoParlarClient != null) botoParlarClient.SetActive(false);
 
         choiceButtonA.gameObject.SetActive(false);
         choiceButtonB.gameObject.SetActive(false);
@@ -41,7 +42,7 @@ public class DialogueManager : MonoBehaviour
     public void InteractuarAmbClient()
     {
         if (botoParlarClient != null) botoParlarClient.SetActive(false);
-        gfm.TalkClients(); // Cridem al flux perquè activi el diàleg correcte
+        gfm.TalkClients(); 
     }
 
     public void NextSentence()
@@ -73,9 +74,14 @@ public class DialogueManager : MonoBehaviour
     void EndDialogue()
     {
         dialoguePanel.SetActive(false);
+
         if (isDialogueInici)
         {
             agafarComandaButton.SetActive(true);
+        }
+        else
+        {
+            agafarComandaButton.SetActive(false);
         }
 
         gfm.OnDialogueEnded();

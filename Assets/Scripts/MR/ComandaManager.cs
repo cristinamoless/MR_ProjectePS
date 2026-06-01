@@ -4,7 +4,7 @@ using UnityEngine;
 public class ComandaManager : MonoBehaviour
 {
     public TableManager table;
-    public GameObject botoConfirmarRam; 
+    public GameObject botoConfirmarRam;
 
     private GameFlowManager flow;
     public Comanda currentComanda;
@@ -12,7 +12,7 @@ public class ComandaManager : MonoBehaviour
     void Start()
     {
         flow = FindFirstObjectByType<GameFlowManager>();
-        
+
         if (flow != null)
         {
             currentComanda = flow.currentComanda;
@@ -20,12 +20,27 @@ public class ComandaManager : MonoBehaviour
 
         if (botoConfirmarRam != null)
         {
-            botoConfirmarRam.SetActive(true);
+            botoConfirmarRam.SetActive(false);
+        }
+    }
+
+    public void SetCurrentComanda(Comanda nuevaComanda)
+    {
+        currentComanda = nuevaComanda;
+    }
+
+    public void MostrarBotoConfirmar(bool activar)
+    {
+        if (botoConfirmarRam != null)
+        {
+            botoConfirmarRam.SetActive(activar);
         }
     }
 
     public bool CheckOrder()
     {
+        if (currentComanda == null) return false;
+
         List<FlowerType> tableFlowers = table.GetFlowersOnTable();
 
         if (tableFlowers.Count != currentComanda.requiredFlowers.Count)
