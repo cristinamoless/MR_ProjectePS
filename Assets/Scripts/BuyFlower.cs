@@ -16,39 +16,36 @@ public class BuyFlower : MonoBehaviour
 
     public List<FlowerButton> flowerButtons;
 
-    [Header("--- UI Elements ---")]
     public GameObject marcComprar;
     public GameObject perComprar;
     public GameObject comprat;
     public TMP_Text confirmText;
     public TMP_Text resultText;
 
-    [Header("--- VR Continue Button ---")]
-    public GameObject botoContinuar;
+    public GameObject continueButton;
 
     private FlowerType selectedFlower;
 
-    void Start()
-    {
-        if (botoContinuar != null) botoContinuar.SetActive(false);
-    }
-
     public void showFlowers()
     {
-        List<FlowerType> available = new List<FlowerType>();
-
-        foreach (var flower in allFlowers)
-        {
-            if (flower.availableDay == gfm.currentDay && !flower.unlocked)
-                available.Add(flower);
-        }
-
         foreach (var fb in flowerButtons)
         {
-            fb.button.SetActive(available.Contains(fb.flower));
-        }
+            bool hauriaDeSerVisible = false;
 
-        ComprovarBotóContinuar();
+            foreach (var flower in allFlowers)
+            {
+                if (flower.flowerName == fb.flower.flowerName)
+                {
+                    if (flower.availableDay <= gfm.currentDay && !flower.unlocked)
+                    {
+                        hauriaDeSerVisible = true;
+                    }
+                    break;
+                }
+            }
+
+            fb.button.SetActive(hauriaDeSerVisible);
+        }
     }
 
     public void AskToBuy(FlowerType flower)
@@ -78,7 +75,24 @@ public class BuyFlower : MonoBehaviour
         if (PlayerStars.Instance.totalStars >= selectedFlower.seedPrice)
         {
             PlayerStars.Instance.totalStars -= selectedFlower.seedPrice;
+
             selectedFlower.unlocked = true;
+
+            foreach (var flower in allFlowers)
+            {
+                if (flower.flowerName == selectedFlower.flowerName)
+                {
+                    flower.unlocked = true;
+                }
+            }
+
+            foreach (var fb in flowerButtons)
+            {
+                if (fb.flower.flowerName == selectedFlower.flowerName)
+                {
+                    fb.flower.unlocked = true;
+                }
+            }
 
             resultText.text = "COMPRAT!";
             showFlowers();
@@ -95,39 +109,23 @@ public class BuyFlower : MonoBehaviour
         marcComprar.SetActive(false);
     }
 
-    private void ComprovarBotóContinuar()
-    {
-        if (botoContinuar == null) return;
-
-        if (CheckSiNoQuedanFlores())
-        {
-            botoContinuar.SetActive(true);
-        }
-        else
-        {
-            botoContinuar.SetActive(false);
-        }
-    }
-
-    public void PremutBotoContinuar()
-    {
-        if (botoContinuar != null) botoContinuar.SetActive(false);
-
-        comprat.SetActive(false);
-        marcComprar.SetActive(false);
-
-        gfm.BeginClients();
-    }
-
-    private bool CheckSiNoQuedanFlores()
+    public bool HasBoughtFlowersForDay(int day)
     {
         foreach (var flower in allFlowers)
         {
-            if (flower.availableDay == gfm.currentDay && !flower.unlocked)
+            if (flower.availableDay == day)
             {
-                return false;
+                if (!flower.unlocked)
+                    return false;
             }
         }
+
         return true;
+    }
+
+    void Update()
+    {
+        bool allBought = HasBoughtFlowersForDay(gfm.currentDay);
+        continueButton.SetActive(allBought);
     }
 }

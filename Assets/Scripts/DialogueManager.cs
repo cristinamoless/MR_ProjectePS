@@ -42,7 +42,7 @@ public class DialogueManager : MonoBehaviour
     public void InteractuarAmbClient()
     {
         if (botoParlarClient != null) botoParlarClient.SetActive(false);
-        gfm.TalkClients(); 
+        gfm.TalkClients();
     }
 
     public void NextSentence()
@@ -74,15 +74,7 @@ public class DialogueManager : MonoBehaviour
     void EndDialogue()
     {
         dialoguePanel.SetActive(false);
-
-        if (isDialogueInici)
-        {
-            agafarComandaButton.SetActive(true);
-        }
-        else
-        {
-            agafarComandaButton.SetActive(false);
-        }
+        agafarComandaButton.SetActive(true);
 
         gfm.OnDialogueEnded();
     }
@@ -93,7 +85,9 @@ public class DialogueManager : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) ||
             Input.GetKeyDown(KeyCode.Space) ||
-            Input.GetKeyDown(KeyCode.Return))
+            Input.GetKeyDown(KeyCode.Return) ||
+            Input.GetKeyDown(KeyCode.JoystickButton0) ||
+            Input.GetKeyDown(KeyCode.JoystickButton2))
         {
             NextSentence();
         }

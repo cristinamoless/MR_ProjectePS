@@ -1,9 +1,9 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
 public class GameFlowManager : MonoBehaviour
 {
-    [Header("--- Databases & Core ---")]
     public DadesComanda database;
     public OrderDisplay uiOrder;
     public BuyFlower buyFlower;
@@ -17,18 +17,18 @@ public class GameFlowManager : MonoBehaviour
     public GameObject toDo;
     public GameObject notEnough;
 
-    [Header("--- Game State ---")]
     public Comanda currentComanda;
-    public int currentDay = 0;
+    public int currentDay = 1;
     private int comandaIndex = 0;
-    public bool lastOrderWasCorrect;
-    private bool waitingForFinalDialogue = false;
-    public List<CompletedOrderInfo> completedOrders = new List<CompletedOrderInfo>();
 
-    [Header("--- Dialogues ---")]
     public DialogueManager dialogueManager;
     public Dialogue currentDialogue;
     public Dialogue[] allDialogues;
+
+    public bool lastOrderWasCorrect;
+    private bool waitingForFinalDialogue = false;
+
+    public List<CompletedOrderInfo> completedOrders = new List<CompletedOrderInfo>();
 
     void Awake()
     {
@@ -37,6 +37,8 @@ public class GameFlowManager : MonoBehaviour
 
     void Start()
     {
+        currentDay = 0;
+
         if (placementUI != null) placementUI.SetActive(true);
 
         repartidor.SetActive(false);
@@ -52,10 +54,12 @@ public class GameFlowManager : MonoBehaviour
         currentDay++;
         comandaIndex = 0;
 
-        placementUI.SetActive(false);
+        if (placementUI != null) placementUI.SetActive(false);
+
         date.SetActive(true);
         fiDia.SetActive(false);
         toDo.SetActive(false);
+        buyFlower.showFlowers();
         repartidor.SetActive(true);
 
         if (dialogueManager != null && dialogueManager.botoParlarClient != null)
@@ -71,23 +75,10 @@ public class GameFlowManager : MonoBehaviour
         }
     }
 
-    public void FlorAllBuy()
-    {
-        Debug.Log("¡Todas las flores del día compradas! Pasamos a los clientes automáticamente.");
-        BeginClients();
-    }
-
     public void BeginClients()
     {
         repartidor.SetActive(false);
         dialeg.SetActive(false);
-
-        var npcManager = FindFirstObjectByType<NPCManager>();
-
-        if (npcManager != null)
-        {
-            npcManager.ShowClient(comandaIndex);
-        }
 
         if (dialogueManager != null && dialogueManager.botoParlarClient != null)
         {
@@ -101,9 +92,6 @@ public class GameFlowManager : MonoBehaviour
         dialogueManager.isDialogueInici = true;
         currentDialogue = GetDialogue(currentDay, comandaIndex, DialogueType.Initial);
         dialogueManager.StartDialogue(currentDialogue);
-
-        var rockNPC = FindFirstObjectByType<RockNPC>();
-        if (rockNPC != null) rockNPC.StopWaving();
     }
 
     public void GetComanda()
@@ -111,21 +99,13 @@ public class GameFlowManager : MonoBehaviour
         dialeg.SetActive(false);
         if (dialogueManager.isDialogueInici)
         {
-            var list = currentDay == 1 ? database.day1Orders : database.day2Orders;
+            if (currentDay == 1)
+                currentComanda = database.day1Orders[comandaIndex];
+            else
+                currentComanda = database.day2Orders[comandaIndex];
 
-            if (comandaIndex < list.Count)
-            {
-                currentComanda = list[comandaIndex];
-                uiOrder.ShowOrder(currentComanda);
-                toDo.SetActive(true);
-
-                var comandaMgr = FindFirstObjectByType<ComandaManager>();
-                if (comandaMgr != null)
-                {
-                    comandaMgr.SetCurrentComanda(currentComanda);
-                    comandaMgr.MostrarBotoConfirmar(true);
-                }
-            }
+            uiOrder.ShowOrder(currentComanda);
+            toDo.SetActive(true);
         }
     }
 
@@ -146,10 +126,12 @@ public class GameFlowManager : MonoBehaviour
         toDo.SetActive(false);
 
         Dialogue result = null;
+
         if (correct)
         {
-            result = GetDialogue(currentDay, comandaIndex - 1, DialogueType.Choice) ??
-                     GetDialogue(currentDay, comandaIndex - 1, DialogueType.Happy);
+            result = GetDialogue(currentDay, comandaIndex - 1, DialogueType.Choice);
+            if (result == null)
+                result = GetDialogue(currentDay, comandaIndex - 1, DialogueType.Happy);
         }
         else
         {
@@ -171,21 +153,11 @@ public class GameFlowManager : MonoBehaviour
         if (!dialogueManager.isDialogueInici && !waitingForFinalDialogue)
         {
             var npcManager = FindFirstObjectByType<NPCManager>();
-            var list = currentDay == 1 ? database.day1Orders : database.day2Orders;
-
-            if (comandaIndex < list.Count)
+            if (npcManager != null)
             {
-                if (npcManager != null)
+                if (dialogueManager != null && dialogueManager.botoParlarClient != null)
                 {
-                    npcManager.MakeCurrentClientLeave(() =>
-                    {
-                        npcManager.ShowClient(comandaIndex);
-
-                        if (dialogueManager != null && dialogueManager.botoParlarClient != null)
-                        {
-                            dialogueManager.botoParlarClient.SetActive(true);
-                        }
-                    });
+                    dialogueManager.botoParlarClient.SetActive(true);
                 }
             }
         }
@@ -220,9 +192,7 @@ public class GameFlowManager : MonoBehaviour
         }
 
         var timeManager = FindFirstObjectByType<TimeManager>();
-        if (timeManager != null) timeManager.ResetDay();
-
-        StartDay();
+        timeManager.ResetDay();
     }
 
     private int GetMinimumStarsForNextDay()
@@ -250,11 +220,9 @@ public class GameFlowManager : MonoBehaviour
     {
         if (notEnough.activeSelf)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
             {
                 notEnough.SetActive(false);
-                date.SetActive(true);
-                StartDay();
             }
         }
     }
