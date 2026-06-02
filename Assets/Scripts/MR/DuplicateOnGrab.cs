@@ -8,8 +8,10 @@ public class DuplicateOnGrab : MonoBehaviour
     private Grabbable grabbable;
     private bool hasDuplicated = false;
 
-    private Vector3 initialPosition;
-    private Quaternion initialRotation;
+    // Guardarem les posicions globals (World) per evitar errors d'escala dels pares
+    private Vector3 worldPosition;
+    private Quaternion worldRotation;
+    private Vector3 worldScale;
     private Transform initialParent;
 
     void Awake()
@@ -23,9 +25,10 @@ public class DuplicateOnGrab : MonoBehaviour
 
     void Start()
     {
-        // Cache the initial stand position, rotation, and parent
-        initialPosition = transform.position;
-        initialRotation = transform.rotation;
+        // Guardem les coordenades mundials reals d'aquest objecte exacte a l'escena
+        worldPosition = transform.position;
+        worldRotation = transform.rotation;
+        worldScale = transform.lossyScale; // L'escala real al món
         initialParent = transform.parent;
 
         if (grabbable != null)
@@ -44,7 +47,6 @@ public class DuplicateOnGrab : MonoBehaviour
 
     private void HandlePointerEventRaised(PointerEvent evt)
     {
-        // When the hand/controller selects (grabs) the object
         if (evt.Type == PointerEventType.Select)
         {
             OnGrab();
@@ -58,25 +60,25 @@ public class DuplicateOnGrab : MonoBehaviour
         hasDuplicated = true;
         Debug.Log($"[DuplicateOnGrab] {gameObject.name} grabbed. Duplicating...");
 
-        // 1. Determine the template to clone
-        GameObject template = flowerPrefab;
-        if (template == null || template == gameObject)
-        {
-            template = gameObject;
-        }
+        // Usem aquest mateix GameObject de l'escena com a plantilla, ja que té l'escala i posició correctes
+        GameObject template = gameObject;
 
-        // 2. Spawn a new flower source at the cached stand position
-        GameObject nextSource = Instantiate(template, initialPosition, initialRotation, initialParent);
+        // Instanciem primer al món net (sense pare) per aplicar la transformació real
+        GameObject nextSource = Instantiate(template, worldPosition, worldRotation);
         nextSource.name = template.name;
 
-        // Reset the hasDuplicated flag on the next source script so it can be grabbed
+        // Li tornem a assignar el pare original
+        nextSource.transform.SetParent(initialParent, true);
+
+        // Forcem l'escala mundial correcta
+        nextSource.transform.localScale = transform.localScale;
+
         DuplicateOnGrab newScript = nextSource.GetComponent<DuplicateOnGrab>();
         if (newScript != null)
         {
             newScript.hasDuplicated = false;
         }
 
-        // 3. Ensure the grabbed flower (this object) has the Flower component and assign the type
         Flower f = GetComponent<Flower>();
         if (f == null)
         {
@@ -84,11 +86,10 @@ public class DuplicateOnGrab : MonoBehaviour
         }
         f.flowerType = flowerType;
 
-        // 4. Parent this grabbed flower to the TableManager's workArea
         TableManager table = FindFirstObjectByType<TableManager>();
         if (table != null && table.workArea != null)
         {
-            transform.SetParent(table.workArea);
+            transform.SetParent(table.workArea, true);
             Debug.Log($"[DuplicateOnGrab] Parented grabbed flower to {table.workArea.name}");
         }
         else
