@@ -255,6 +255,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5650760955642744097, guid: b594380a1e7cb9a45bcc0aa738356ba3, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: e81788777eda39543985da4fe92c9c5e, type: 2}
     - target: {fileID: 6238023820735076014, guid: b594380a1e7cb9a45bcc0aa738356ba3, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -313,11 +317,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 97356237140083744, guid: b594380a1e7cb9a45bcc0aa738356ba3, type: 3}
   m_PrefabInstance: {fileID: 5289090}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &5289093 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5650760955642744097, guid: b594380a1e7cb9a45bcc0aa738356ba3, type: 3}
-  m_PrefabInstance: {fileID: 5289090}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5289094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,7 +329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 152c6f40432f8cb43864672c568f30bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 5289093}
+  anim: {fileID: 240925982}
   spawnPoint: {fileID: 1257345906}
   exitPoint: {fileID: 1857596652}
   walkSpeed: 2
@@ -8249,6 +8248,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4558129042925464013, guid: d4d7327faf1af5248899153cc6455dbb, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: e81788777eda39543985da4fe92c9c5e, type: 2}
     - target: {fileID: 5175154637980454264, guid: d4d7327faf1af5248899153cc6455dbb, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -8384,11 +8387,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8462825951330171365, guid: d4d7327faf1af5248899153cc6455dbb, type: 3}
   m_PrefabInstance: {fileID: 1013966986}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &1013966989 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 4558129042925464013, guid: d4d7327faf1af5248899153cc6455dbb, type: 3}
-  m_PrefabInstance: {fileID: 1013966986}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1013966990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8401,7 +8399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 152c6f40432f8cb43864672c568f30bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 1013966989}
+  anim: {fileID: 240925982}
   spawnPoint: {fileID: 1257345906}
   exitPoint: {fileID: 1857596652}
   walkSpeed: 2
@@ -16180,6 +16178,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 7664418977733440660, guid: cd3a1662645665c4eab8af9faa905e29, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: e81788777eda39543985da4fe92c9c5e, type: 2}
     - target: {fileID: 7861067604222425393, guid: cd3a1662645665c4eab8af9faa905e29, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -16219,11 +16221,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 686092392856947745, guid: cd3a1662645665c4eab8af9faa905e29, type: 3}
   m_PrefabInstance: {fileID: 1856099496}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &1856099499 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 7664418977733440660, guid: cd3a1662645665c4eab8af9faa905e29, type: 3}
-  m_PrefabInstance: {fileID: 1856099496}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1856099500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16236,7 +16233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 152c6f40432f8cb43864672c568f30bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 1856099499}
+  anim: {fileID: 240925982}
   spawnPoint: {fileID: 1257345906}
   exitPoint: {fileID: 1857596652}
   walkSpeed: 2

@@ -77,13 +77,6 @@ public class ComandaManager : MonoBehaviour
     {
         if (currentComanda == null) return false;
 
-        if (table == null)
-        {
-            table = FindFirstObjectByType<TableManager>();
-        }
-
-        if (table == null) return false;
-
         List<FlowerType> tableFlowers = table.GetFlowersOnTable();
 
         if (tableFlowers.Count != currentComanda.requiredFlowers.Count)
@@ -95,12 +88,12 @@ public class ComandaManager : MonoBehaviour
         {
             bool found = false;
 
-            foreach (FlowerType f in temp)
+            for (int i = temp.Count - 1; i >= 0; i--)
             {
-                if (f.name == req.name)
+                if (temp[i].name == req.name)
                 {
                     found = true;
-                    temp.Remove(f);
+                    temp.RemoveAt(i); 
                     break;
                 }
             }
