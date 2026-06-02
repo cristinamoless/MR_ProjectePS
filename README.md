@@ -31,8 +31,6 @@ Per poder començar el joc, l'usuari ha de definir els punts de l'entorn real on
 - **La Taula de treball ("Taula")**: Lloc on es dissenyen i preparen els rams.
 - **La Finestra ("Finestra")**: Lloc on apareixeran els clients (NPCs) i es rebran les comandes.
 
-> [!IMPORTANT]
-> El botó **COMENÇAR** al menú de configuració no es mostrarà fins que l'usuari no hagi col·locat i confirmat tant la taula com la finestra a la seva sala. Un cop col·locats ambdós elements, el botó es farà visible automàticament per poder iniciar el dia de joc.
 
 ## Requeriments
 - Unity amb la versió indicada al fitxer `ProjectSettings/ProjectVersion.txt`.
@@ -101,3 +99,5 @@ Projecte acadèmic. Tots els drets sobre el contingut, els assets i el disseny c
 ---
 
 > Projecte desenvolupat com a adaptació en realitat mixta de *Flowers For You*.
+
+ENLLAÇ PRESENTACIÓ: https://canva.link/dngaho48ddef5bt
