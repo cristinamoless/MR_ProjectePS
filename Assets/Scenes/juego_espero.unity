@@ -16749,7 +16749,7 @@ GameObject:
   - component: {fileID: 1951501210}
   - component: {fileID: 1951501209}
   m_Layer: 3
-  m_Name: Plane (1)
+  m_Name: suelo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
