@@ -26,6 +26,14 @@ En aquesta versió, la realitat mixta permet combinar l’entorn físic amb elem
 - Diàlegs i interacció amb NPCs integrats espacialment.
 - Modes assegut i dret, amb opcions de confort per afavorir l’accessibilitat.
 
+## Configuració Inicial de l'Espai (Realitat Mixta)
+Per poder començar el joc, l'usuari ha de definir els punts de l'entorn real on es col·locaran els elements virtuals principals:
+- **La Taula de treball ("Taula")**: Lloc on es dissenyen i preparen els rams.
+- **La Finestra ("Finestra")**: Lloc on apareixeran els clients (NPCs) i es rebran les comandes.
+
+> [!IMPORTANT]
+> El botó **COMENÇAR** al menú de configuració no es mostrarà fins que l'usuari no hagi col·locat i confirmat tant la taula com la finestra a la seva sala. Un cop col·locats ambdós elements, el botó es farà visible automàticament per poder iniciar el dia de joc.
+
 ## Requeriments
 - Unity amb la versió indicada al fitxer `ProjectSettings/ProjectVersion.txt`.
 - Paquets recomanats: XR Interaction Toolkit i Input System.
