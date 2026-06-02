@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 public class Flower : MonoBehaviour
 {
@@ -10,19 +9,24 @@ public class Flower : MonoBehaviour
     void Awake()
     {
         img = GetComponent<Image>();
-        img.sprite = flowerType.withLeaves;
+        if (img != null && flowerType != null)
+        {
+            img.sprite = flowerType.withLeaves;
+        }
     }
 
     public void RemoveLeaves()
     {
-        if (img != null)
+        if (img != null && flowerType != null)
             img.sprite = flowerType.withoutLeaves;
     }
+
     public void Rotate(float angle)
     {
         RectTransform rt = GetComponent<RectTransform>();
-        rt.Rotate(0, 0, angle);
+        if (rt != null)
+        {
+            rt.Rotate(0, 0, angle);
+        }
     }
-
-
 }

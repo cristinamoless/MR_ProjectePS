@@ -5,7 +5,6 @@ public class TimeManager : MonoBehaviour
 {
     [Header("UI")]
     public TMP_Text timeText;
-    public TMP_Text dayText;
 
     [Header("Time")]
     public int currentHour = 10;
@@ -39,13 +38,6 @@ public class TimeManager : MonoBehaviour
         timeText.text = hour.ToString("00") + ":00";
         UpdateLighting(hour);
     }
-
-    public void SetDay(int dayIndex)
-    {
-        currentDayIndex = dayIndex;
-        dayText.text = days[dayIndex];
-    }
-
 
     void UpdateLighting(int hour)
     {

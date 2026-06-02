@@ -30,5 +30,17 @@ public class ModelSwapReceiver : MonoBehaviour
 
         flowerFullModel.SetActive(false);
         flowerCutModel.SetActive(true);
+
+        // Notify the Flower component that the leaves have been removed
+        Flower flower = GetComponent<Flower>();
+        if (flower == null)
+            flower = GetComponentInParent<Flower>();
+        if (flower == null)
+            flower = GetComponentInChildren<Flower>();
+
+        if (flower != null)
+        {
+            flower.RemoveLeaves();
+        }
     }
 }

@@ -3353,8 +3353,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawner: {fileID: 0}
-  previewPrefab: {fileID: 0}
-  botoUICollocar: {fileID: 0}
   rotationOffset: {x: 0, y: 0, z: 0}
 --- !u!4 &272622090
 Transform:
@@ -3470,10 +3468,10 @@ MonoBehaviour:
       - m_Target: {fileID: 635033450}
         m_TargetAssemblyTypeName: SimpleAnchorPlacer, Assembly-CSharp
         m_MethodName: EnablePlacement
-        m_Mode: 1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 8040960704363475620, guid: e7e1459174034f54da62030803f403c5, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6846,8 +6844,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawner: {fileID: 1396364609}
-  previewPrefab: {fileID: 8040960704363475620, guid: e7e1459174034f54da62030803f403c5, type: 3}
-  botoUICollocar: {fileID: 284062707}
   rotationOffset: {x: 0, y: 0, z: 0}
 --- !u!4 &635033451
 Transform:
@@ -9611,7 +9607,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -11203,10 +11199,10 @@ MonoBehaviour:
       - m_Target: {fileID: 1785399300}
         m_TargetAssemblyTypeName: SimpleAnchorPlacer, Assembly-CSharp
         m_MethodName: EnablePlacement
-        m_Mode: 1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 6364482633759154718, guid: 60ca57cfcd1b65b449b2df3e736cdefd, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -11488,7 +11484,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeText: {fileID: 1451359250}
-  dayText: {fileID: 0}
   currentHour: 10
   currentDayIndex: 0
   sunLight: {fileID: 0}
@@ -12808,7 +12803,7 @@ Transform:
   m_GameObject: {fileID: 1355978916}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.90576, y: -13.947046, z: 4.7786202}
+  m_LocalPosition: {x: 0.166, y: 0.274, z: 0.997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15383,6 +15378,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flowerPrefab: {fileID: 0}
+  flowerType: {fileID: 0}
 --- !u!114 &1632345880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16116,6 +16112,7 @@ GameObject:
   - component: {fileID: 1682523327}
   - component: {fileID: 1682523326}
   - component: {fileID: 1682523332}
+  - component: {fileID: 1682523333}
   m_Layer: 0
   m_Name: Flor_Raiz
   m_TagString: Untagged
@@ -16377,6 +16374,20 @@ MonoBehaviour:
   _kinematicWhileSelected: 1
   _throwWhenUnselected: 1
   _forceKinematicDisabled: 0
+--- !u!114 &1682523333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1682523325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db18242bdb066f24eb935d56e71d8f7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flowerPrefab: {fileID: 1682523325}
+  flowerType: {fileID: 11400000, guid: a74fc8d214dea0f4e9b985b990b069d0, type: 2}
 --- !u!1 &1703473410
 GameObject:
   m_ObjectHideFlags: 0
@@ -17571,8 +17582,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawner: {fileID: 1396364609}
-  previewPrefab: {fileID: 1321208239657068459, guid: a8de065e1f829024889dab099fec6e4b, type: 3}
-  botoUICollocar: {fileID: 1202250044}
   rotationOffset: {x: 0, y: 90, z: 0}
 --- !u!4 &1785399301
 Transform:
