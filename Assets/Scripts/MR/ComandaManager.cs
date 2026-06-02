@@ -13,33 +13,76 @@ public class ComandaManager : MonoBehaviour
     {
         flow = FindFirstObjectByType<GameFlowManager>();
 
+        if (flow != null && flow.currentComanda != null)
+        {
+            currentComanda = flow.currentComanda;
+        }
+
         if (botoConfirmarRam != null)
         {
             botoConfirmarRam.SetActive(false);
         }
     }
 
-    public void SetCurrentComanda(Comanda nuevaComanda)
+    void Update()
     {
-        currentComanda = nuevaComanda;
-
-        if (currentComanda != null)
+        if (flow == null)
         {
-            MostrarBotoConfirmar(true);
+            flow = FindFirstObjectByType<GameFlowManager>();
+        }
+
+        if (flow != null)
+        {
+            currentComanda = flow.currentComanda;
+        }
+        else
+        {
+            currentComanda = null;
+        }
+
+        if (table == null)
+        {
+            table = FindFirstObjectByType<TableManager>();
+        }
+
+        if (currentComanda != null && table != null)
+        {
+            List<FlowerType> tableFlowers = table.GetFlowersOnTable();
+            bool bouquetDone = tableFlowers.Count >= currentComanda.requiredFlowers.Count;
+
+            if (botoConfirmarRam != null && botoConfirmarRam.activeSelf != bouquetDone)
+            {
+                botoConfirmarRam.SetActive(bouquetDone);
+            }
+        }
+        else
+        {
+            if (botoConfirmarRam != null && botoConfirmarRam.activeSelf)
+            {
+                botoConfirmarRam.SetActive(false);
+            }
         }
     }
 
-    public void MostrarBotoConfirmar(bool activar)
+    public void SetCurrentComanda(Comanda nuevaComanda)
     {
+        currentComanda = nuevaComanda;
         if (botoConfirmarRam != null)
         {
-            botoConfirmarRam.SetActive(activar);
+            botoConfirmarRam.SetActive(false);
         }
     }
 
     public bool CheckOrder()
     {
         if (currentComanda == null) return false;
+
+        if (table == null)
+        {
+            table = FindFirstObjectByType<TableManager>();
+        }
+
+        if (table == null) return false;
 
         List<FlowerType> tableFlowers = table.GetFlowersOnTable();
 
@@ -73,6 +116,11 @@ public class ComandaManager : MonoBehaviour
     {
         if (currentComanda == null) return;
 
+        if (table == null)
+        {
+            table = FindFirstObjectByType<TableManager>();
+        }
+
         bool correct = CheckOrder();
         flow.lastOrderWasCorrect = correct;
 
@@ -82,10 +130,22 @@ public class ComandaManager : MonoBehaviour
             PlayerStars.Instance.addStars(reward);
         }
 
-        MostrarBotoConfirmar(false);
+        if (botoConfirmarRam != null)
+        {
+            botoConfirmarRam.SetActive(false);
+        }
+
+        if (flow != null)
+        {
+            flow.currentComanda = null;
+        }
         currentComanda = null;
 
-        table.ClearTable();
+        if (table != null)
+        {
+            table.ClearTable();
+        }
+        
         flow.OnOrderConfirmed();
     }
 }

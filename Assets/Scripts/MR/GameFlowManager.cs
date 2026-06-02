@@ -34,6 +34,7 @@ public class GameFlowManager : MonoBehaviour
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
+        dialeg.SetActive(true);
     }
 
     void Start()
@@ -43,7 +44,6 @@ public class GameFlowManager : MonoBehaviour
         if (placementUI != null) placementUI.SetActive(true);
 
         repartidor.SetActive(false);
-        dialeg.SetActive(false);
         fiDia.SetActive(false);
         date.SetActive(false);
         toDo.SetActive(false);
@@ -150,6 +150,18 @@ public class GameFlowManager : MonoBehaviour
         }
 
         dialogueManager.isDialogueInici = false;
+
+        if (result == null)
+        {
+            Debug.LogWarning($"[GameFlowManager] No dialogue found for day {currentDay}, index {comandaIndex - 1}! Proceeding safely.");
+            if (comandaIndex >= list.Count)
+            {
+                waitingForFinalDialogue = true;
+            }
+            OnDialogueEnded();
+            return;
+        }
+
         dialeg.SetActive(true);
         dialogueManager.StartDialogue(result);
 
@@ -214,8 +226,6 @@ public class GameFlowManager : MonoBehaviour
             return;
         }
 
-        var timeManager = FindFirstObjectByType<TimeManager>();
-        timeManager.ResetDay();
     }
 
     private int GetMinimumStarsForNextDay()

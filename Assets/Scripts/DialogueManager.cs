@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
@@ -20,12 +20,12 @@ public class DialogueManager : MonoBehaviour
     public Button choiceButtonA;
     public Button choiceButtonB;
 
-    // Assigna aquí el botó gran transparent des de l'inspector
+    // Assigna aquÃ­ el botÃ³ gran transparent des de l'inspector
     public Button dialegClickButton;
 
     void Start()
     {
-        // Vinculem directament el botó transparent perquè passi el text
+        // Vinculem directament el botÃ³ transparent perquÃ¨ passi el text
         if (dialegClickButton != null)
         {
             dialegClickButton.onClick.AddListener(NextSentence);
@@ -34,6 +34,12 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue d)
     {
+        if (d == null)
+        {
+            Debug.LogWarning("[DialogueManager] StartDialogue called with null dialogue!");
+            EndDialogue();
+            return;
+        }
         dialogue = d;
         index = 0;
 
@@ -45,7 +51,7 @@ public class DialogueManager : MonoBehaviour
         choiceButtonA.gameObject.SetActive(false);
         choiceButtonB.gameObject.SetActive(false);
 
-        // Activem el botó invisible al principi perquè l'usuari pugui fer click per passar el text
+        // Activem el botÃ³ invisible al principi perquÃ¨ l'usuari pugui fer click per passar el text
         if (dialegClickButton != null) dialegClickButton.gameObject.SetActive(true);
 
         nameText.text = dialogue.characterName;
@@ -68,7 +74,7 @@ public class DialogueManager : MonoBehaviour
         {
             if (dialogue.choices != null && dialogue.choices.Length > 0)
             {
-                // Si hi ha opcions, desactivem el botó transparent per deixar prémer choice1 i choice2
+                // Si hi ha opcions, desactivem el botÃ³ transparent per deixar prÃ©mer choice1 i choice2
                 if (dialegClickButton != null) dialegClickButton.gameObject.SetActive(false);
                 ShowSimpleChoices();
                 return;

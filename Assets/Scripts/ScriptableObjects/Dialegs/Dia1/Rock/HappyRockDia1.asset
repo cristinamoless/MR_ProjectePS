@@ -15,9 +15,10 @@ MonoBehaviour:
   characterName: Rock
   characterPixel: {fileID: 21300000, guid: 49ca2ca02b9606a41819020fc8bf4ae3, type: 3}
   sentences:
-  - "Oh! S\xF3n perfectes {playerName} , li encantaran. "
+  - "Oh! S\xF3n perfectes, li encantaran. "
   - "Tamb\xE9 donar\xE9 veu a la teva bona feina pel poble. Espero veure\u2019t m\xE9s
     per aqu\xED!!!\r"
   day: 1
   orderIndex: 0
   type: 1
+  choices: []

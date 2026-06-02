@@ -18,12 +18,13 @@ MonoBehaviour:
   - 'Encantat, soc en Rock :)
 
 '
-  - 'Venia a preguntar si tenies flors vermelles. '
-  - "Avui \xE9s l\u2019aniversari de la meva xicota, i el vermell \xE9s el seu color
+  - 'Venia a preguntar si tenies flors grogues. '
+  - "Avui \xE9s l\u2019aniversari de la meva xicota, i el groc \xE9s el seu color
     preferit\u2026\r\n"
   - "S\xED que en tens!? Quina il\xB7lusi\xF3."
-  - "Doncs t\u2019encomano un ram de flors vermelles, m\u2019espero que el facis,
-    estar\xE9 per aqu\xED divagant. "
+  - "Doncs t\u2019encomano un ram de flors grogues, m\u2019espero que el facis, estar\xE9
+    per aqu\xED divagant. "
   day: 1
   orderIndex: 0
   type: 0
+  choices: []
