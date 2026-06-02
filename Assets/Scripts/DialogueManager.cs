@@ -20,6 +20,18 @@ public class DialogueManager : MonoBehaviour
     public Button choiceButtonA;
     public Button choiceButtonB;
 
+    // Assigna aquí el botó gran transparent des de l'inspector
+    public Button dialegClickButton;
+
+    void Start()
+    {
+        // Vinculem directament el botó transparent perquè passi el text
+        if (dialegClickButton != null)
+        {
+            dialegClickButton.onClick.AddListener(NextSentence);
+        }
+    }
+
     public void StartDialogue(Dialogue d)
     {
         dialogue = d;
@@ -32,6 +44,9 @@ public class DialogueManager : MonoBehaviour
 
         choiceButtonA.gameObject.SetActive(false);
         choiceButtonB.gameObject.SetActive(false);
+
+        // Activem el botó invisible al principi perquè l'usuari pugui fer click per passar el text
+        if (dialegClickButton != null) dialegClickButton.gameObject.SetActive(true);
 
         nameText.text = dialogue.characterName;
         characterImage.sprite = dialogue.characterPixel;
@@ -53,6 +68,8 @@ public class DialogueManager : MonoBehaviour
         {
             if (dialogue.choices != null && dialogue.choices.Length > 0)
             {
+                // Si hi ha opcions, desactivem el botó transparent per deixar prémer choice1 i choice2
+                if (dialegClickButton != null) dialegClickButton.gameObject.SetActive(false);
                 ShowSimpleChoices();
                 return;
             }
@@ -73,24 +90,11 @@ public class DialogueManager : MonoBehaviour
 
     void EndDialogue()
     {
+        if (dialegClickButton != null) dialegClickButton.gameObject.SetActive(false);
         dialoguePanel.SetActive(false);
         agafarComandaButton.SetActive(true);
 
         gfm.OnDialogueEnded();
-    }
-
-    void Update()
-    {
-        if (!dialoguePanel.activeSelf) return;
-
-        if (Input.GetMouseButtonDown(0) ||
-            Input.GetKeyDown(KeyCode.Space) ||
-            Input.GetKeyDown(KeyCode.Return) ||
-            Input.GetKeyDown(KeyCode.JoystickButton0) ||
-            Input.GetKeyDown(KeyCode.JoystickButton2))
-        {
-            NextSentence();
-        }
     }
 
     void ShowSimpleChoices()
